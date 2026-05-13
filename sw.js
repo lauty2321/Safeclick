@@ -1,6 +1,6 @@
-// SafeClick Service Worker - PWA Support
+// SafeHeart Service Worker - PWA Support
 
-const CACHE_NAME = 'safeclick-v2';
+const CACHE_NAME = 'safeheart-v2';
 const urlsToCache = [
   '/',
   '/app.html',
@@ -15,11 +15,11 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('SafeClick: Cache abierto');
+        console.log('SafeHeart: Cache abierto');
         return cache.addAll(urlsToCache);
       })
       .catch((err) => {
-        console.log('SafeClick: Error al cachear', err);
+        console.log('SafeHeart: Error al cachear', err);
       })
   );
   self.skipWaiting();
@@ -32,7 +32,7 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheName !== CACHE_NAME) {
-            console.log('SafeClick: Limpiando cache antigua:', cacheName);
+            console.log('SafeHeart: Limpiando cache antigua:', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -88,11 +88,11 @@ self.addEventListener('fetch', (event) => {
 // Manejar notificaciones push
 self.addEventListener('push', (event) => {
   const options = {
-    body: event.data ? event.data.text() : 'Alerta de emergencia SafeClick',
+    body: event.data ? event.data.text() : 'Alerta de emergencia SafeHeart',
     icon: '/logo-192.png',
     badge: '/logo-192.png',
     vibrate: [200, 100, 200, 100, 200],
-    tag: 'safeclick-emergency',
+    tag: 'safeheart-emergency',
     requireInteraction: true,
     actions: [
       { action: 'open', title: 'Abrir App' },
@@ -101,7 +101,7 @@ self.addEventListener('push', (event) => {
   };
   
   event.waitUntil(
-    self.registration.showNotification('SafeClick - EMERGENCIA', options)
+    self.registration.showNotification('SafeHeart - EMERGENCIA', options)
   );
 });
 
@@ -138,7 +138,7 @@ async function syncEmergencyData() {
       await clearPendingEmergencyData();
     }
   } catch (error) {
-    console.error('SafeClick: Error sincronizando datos', error);
+    console.error('SafeHeart: Error sincronizando datos', error);
   }
 }
 
